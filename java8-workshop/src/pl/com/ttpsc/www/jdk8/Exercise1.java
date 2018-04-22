@@ -18,7 +18,8 @@ public class Exercise1 {
 	private static void exercise1() {
 		List<String> list = Arrays.asList("alpha", "bravo", "charlie", "delta", "echo", "foxtrot");
 
-		/* YOUR CODE HERE */
+		List<String> solution = list.stream().map(e -> e.substring(0, 3)).collect(Collectors.toList());
+		System.out.println(solution);
 	}
 
 	/**
@@ -29,7 +30,8 @@ public class Exercise1 {
 	private static void exercise2() {
 		List<String> list = new ArrayList<>(Arrays.asList("alpha", "bravo", "charlie", "delta", "echo", "foxtrot"));
 
-		/* YOUR CODE HERE */
+		List<String> solution = list.stream().filter(s -> s.length() % 2 != 0).collect(Collectors.toList());
+		System.out.println(solution);
 	}
 
 	/**
@@ -40,7 +42,8 @@ public class Exercise1 {
 	private static void exercise3() {
 		List<String> list = new ArrayList<>(Arrays.asList("alpha", "bravo", "charlie", "delta", "echo", "foxtrot"));
 
-		/* YOUR CODE HERE */
+		List<String> solution = list.stream().map(s -> s.toUpperCase()).collect(Collectors.toList());
+		System.out.println(solution);
 	}
 
 	/**
@@ -55,7 +58,7 @@ public class Exercise1 {
 		map.put("b", 2);
 		map.put("a", 1);
 
-		/* YOUR CODE HERE */
+
 	}
 
 	/**
@@ -66,7 +69,8 @@ public class Exercise1 {
 	private static void exercise5() {
 		List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
-		/* YOUR CODE HERE */
+		Thread thread = new Thread(() -> list.forEach(System.out::println));
+		thread.start();
 	}
 
 	/**

@@ -1,8 +1,15 @@
 package pl.com.ttpsc.www.jdk8;
 
+import pl.com.ttpsc.www.jdk8.helper.FileHelper;
+
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Exercise2 {
 
@@ -18,7 +25,9 @@ public class Exercise2 {
 		List<String> list = Arrays.asList(
 				"The", "Quick", "BROWN", "Fox", "Jumped", "Over", "The", "LAZY", "DOG");
 
-		/* YOUR CODE HERE */
+		list.stream()
+				.map(s -> s.toUpperCase())
+				.forEach(System.out::println);
 	}
 
 	/**
@@ -31,7 +40,10 @@ public class Exercise2 {
 		List<String> list = Arrays.asList(
 				"The", "Quick", "BROWN", "Fox", "Jumped", "Over", "The", "LAZY", "DOG");
 
-		/* YOUR CODE HERE */
+		List<String> solution = list.stream()
+				.filter(s -> s.length() % 2 != 0)
+				.collect(Collectors.toList());
+		System.out.println(solution);
 	}
 
 	/**
@@ -45,16 +57,24 @@ public class Exercise2 {
 		List<String> list = Arrays.asList(
 				"The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog");
 
-		/* YOUR CODE HERE */
+		String solution = IntStream
+				.range(0, list.size())
+				.filter(i -> ((i >= 2) && (i <= 4)))
+				.mapToObj(list::get)
+				.collect(Collectors.joining("-"));
+
+		System.out.println(solution);
 	}
 
 	/**
 	 * Count the number of lines in the file using the BufferedReader provided
 	 */
 	private static void exercise4() throws IOException {
-		
-//		FileHelper.getStreamFromFile(FileHelper.SONNET)
-		
+
+		long count = FileHelper.getStreamFromFile(FileHelper.SONNET)
+				.count();
+		System.out.println("line counter: " + count);
+
 	}
 
 	/**
@@ -64,9 +84,14 @@ public class Exercise2 {
 	 * HINT: A regular expression, WORD_REGEXP, is already defined for your use.
 	 */
 	private static void exercise5() throws IOException {
-		
-//		FileHelper.getStreamFromFile(FileHelper.SONNET)
-		
+
+		Set<String> solution = FileHelper.getStreamFromFile(FileHelper.SONNET)
+				.map(s -> s.split(WORD_REGEXP))
+				.flatMap(s -> Arrays.stream(s))
+				.distinct()
+				.collect(Collectors.toSet());
+		System.out.println(solution);
+
 	}
 
 	/**
@@ -76,16 +101,27 @@ public class Exercise2 {
 	 */
 	private static void exercise6() throws IOException {
 
-//		FileHelper.getStreamFromFile(FileHelper.SONNET)
-		
+		FileHelper.getStreamFromFile(FileHelper.SONNET)
+				.map(s -> s.split(WORD_REGEXP))
+				.flatMap(s -> Arrays.stream(s))
+				.map(s -> s.toLowerCase())
+				.distinct()
+				.sorted()
+				.forEach(System.out::println);
 	}
 
 	/**
 	 * Modify exercise 6 so that the words are sorted by length
 	 */
 	private static void exercise7() throws IOException {
-		
-//		FileHelper.getStreamFromFile(FileHelper.SONNET)
+
+		FileHelper.getStreamFromFile(FileHelper.SONNET)
+				.map(s -> s.split(WORD_REGEXP))
+				.flatMap(s -> Arrays.stream(s))
+				.map(s -> s.toLowerCase())
+				.distinct()
+				.sorted(Comparator.comparingInt(String::length))
+				.forEach(System.out::println);
 		
 	}
 
